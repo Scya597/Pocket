@@ -3,7 +3,7 @@
 
 ## 0. Table of Contents  
 - [Setup Boilerplate](#1-setup-boilerplate)
-- [Development and Production](#2-production)
+- [Production](#2-production)
 - [Supported Config](#3-supported-config)
 
 ## 1. Setup Boilerplate
