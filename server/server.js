@@ -4,19 +4,36 @@ import bodyParser from 'body-parser';
 import config from './config';
 
 const path = require('path');
+const http = require('http');
 
-const server = express();
+const app = express();
 
-server.use(express.static('public'));
-server.get('/', (req, res) => {
+app.use(express.static('public'));
+app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/index.html'));
 });
 
-server.use(bodyParser.json());
+app.use(bodyParser.json());
 
-server.use((err, req, res, next) => {
+app.use((err, req, res, next) => {
   res.status(422).send({ error: err.message });
   next();
+});
+
+const server = http.createServer(app);
+const io = require('socket.io')(server);
+
+const obj = { hello: 'world' };
+io.on('connection', (socket) => {
+  console.log('New client connected');
+  setInterval(() => socket.emit('news', obj), 10000);
+  // socket.emit('news', obj);
+  // socket.on('setName', (name) => {
+  //   socket.emit('news', name);
+  // });
+  socket.on('disconnect', () => {
+    console.log('Client disconnected');
+  });
 });
 
 server.listen(config.port, config.host, () => {
