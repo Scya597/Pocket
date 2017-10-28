@@ -24,15 +24,16 @@ const server = http.createServer(app);
 const io = require('socket.io')(server);
 
 const obj = { hello: 'world' };
-var userList = [];
+const userList = [];
 
 io.on('connection', (socket) => {
   console.log('New client connected');
-  socket.emit('news',obj);
-  socket.on('setName',(name)=>{
+  io.emit('getUserList', userList);
+  socket.emit('news', obj);
+  socket.on('setName', (name) => {
     userList.push(name);
-    io.emit('getUserList',userList);
-  })
+    io.emit('getUserList', userList);
+  });
   socket.on('disconnect', () => {
     console.log('Client disconnected');
   });

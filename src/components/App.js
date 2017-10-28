@@ -16,18 +16,17 @@ class App extends Component {
     this.state.socket = socketIOClient(endpoint);
   }
 
-  componentWillMount(){
-    this.state.socket.on('getUserList', (userList)=> {
-      this.setState({userList});
+  componentWillMount() {
+    console.log('mount!');
+    console.log(this.state);
+    this.state.socket.on('getUserList', (userList) => {
+      this.setState({ userList });
     });
   }
 
   setTitle = () => {
     this.state.socket.emit('setName', { name: this.refs.text.value });
     this.refs.text.value = '';
-    this.state.socket.on('getUserList', (userList)=> {
-      this.setState({userList});
-    });
   }
 
   render() {
@@ -45,9 +44,8 @@ class App extends Component {
           <b className="input-error">Nick name must be alphanumeric characters only!</b>
           <br />
           <button id="startButton" onClick={this.setTitle}>Play</button>
-          {this.state.userList.map((user)=>
-            (<div className="userName"> {user.name} </div>)
-          )}
+          {this.state.userList.map(user =>
+            (<div className="userName"> {user.name} </div>),)}
         </div>
       </div>
     );
