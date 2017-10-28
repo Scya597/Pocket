@@ -26,11 +26,11 @@ const io = require('socket.io')(server);
 const obj = { hello: 'world' };
 io.on('connection', (socket) => {
   console.log('New client connected');
-  setInterval(() => socket.emit('news', obj), 10000);
+  setInterval(() => socket.emit('news', obj), 2000);
   // socket.emit('news', obj);
-  // socket.on('setName', (name) => {
-  //   socket.emit('news', name);
-  // });
+  socket.on('setName', (name) => {
+    this.emit('news', name);
+  });
   socket.on('disconnect', () => {
     console.log('Client disconnected');
   });
