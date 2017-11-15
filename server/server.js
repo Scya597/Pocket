@@ -8,10 +8,28 @@ const http = require('http');
 
 const app = express();
 
-app.use(express.static('public'));
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public/index.html'));
-});
+
+if (process.env.NODE_ENV === 'dev') {
+  const webpackMiddleware = require('webpack-dev-middleware');
+  const webpackHotMiddleware = require('webpack-hot-middleware');
+  const webpack = require('webpack');
+  const webpackDevConfig = require('../webpack.dev.config.js');
+  const compiler = webpack(webpackDevConfig);
+  const middleware = webpackMiddleware(compiler, {
+    publicPath: webpackDevConfig.output.publicPath,
+    stats: { colors: true },
+  });
+  app.use(middleware);
+  app.use(webpackHotMiddleware(compiler));
+  app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, '../public/index.html'));
+  });
+} else {
+  app.use(express.static('public'));
+  app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public/index.html'));
+  });
+}
 
 app.use(bodyParser.json());
 

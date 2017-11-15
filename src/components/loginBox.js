@@ -17,7 +17,7 @@ class loginBox extends Component {
 
   setTitle = () => {
     this.state.socket.emit('setName', { name: this.refs.text.value });
-    this.props.handleLogin(); // update app state
+    this.props.handlelogin(); // update app state
     this.refs.text.value = '';
   }
 
@@ -45,4 +45,3 @@ class loginBox extends Component {
 }
 
 export default loginBox;
-
