@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 
-class loginBox extends Component {
-  constructor() {
+class LoginBox extends Component {
+  constructor(props) {
     super();
     this.state = {
       userList: [],
     };
-    this.state.socket = this.props.socket;
+    this.state.socket = props.socket;
   }
 
   componentWillMount() {
@@ -44,4 +44,4 @@ class loginBox extends Component {
   }
 }
 
-export default loginBox;
+export default LoginBox;
