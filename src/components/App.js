@@ -1,55 +1,37 @@
 import React, { Component } from 'react';
 import socketIOClient from 'socket.io-client';
-
-// import testData from '../testData/testData.json';
-import '../scss/title.scss';
+import loginBox from './loginBox';
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
       endpoint: 'localhost:8080',
-      userList: [],
+      login: 0,
     };
-
     const { endpoint } = this.state;
     this.state.socket = socketIOClient(endpoint);
   }
 
-  componentWillMount() {
-    console.log('mount!');
-    console.log(this.state);
-    this.state.socket.on('getUserList', (userList) => {
-      this.setState({ userList });
-    });
-  }
-
-  setTitle = () => {
-    this.state.socket.emit('setName', { name: this.refs.text.value });
-    this.refs.text.value = '';
+  handleLogin = () => {
+    this.setState({ login: 1 });
   }
 
   render() {
-    return (
-      <div id="startMenuWrapper">
-        <div id="startMenu">
-          <p>Your Online Game</p>
-          <input
-            type="text"
-            tabIndex="0"
-            placeholder="Enter your name here"
-            id="playerNameInput"
-            ref="text"
-          />
-          <b className="input-error">Nick name must be alphanumeric characters only!</b>
-          <br />
-          <button id="startButton" onClick={this.setTitle}>Play</button>
-          {this.state.userList.map(user =>
-            (<div className="userName"> {user.name} </div>),)}
-        </div>
-      </div>
-    );
+    let jsx;
+    if (this.state.login === 0) {
+      jsx = (
+        <loginBox handleLogin={this.handleLogin} socket={this.state.socket} />
+      );
+    } else {
+      jsx = (
+        <div id="pixi" />
+      );
+    }
+
+    return jsx;
   }
 }
 
 export default App;
+
