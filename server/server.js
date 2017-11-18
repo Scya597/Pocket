@@ -2,7 +2,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import _ from 'lodash';
 import config from './config';
-import setting from './setting';
+import setting from '../src/setting';
 
 const path = require('path');
 const http = require('http');
@@ -52,24 +52,42 @@ const startY = 100;
 // ##################
 
 io.on('connection', (socket) => {
-  console.log('New client connected');
+  console.log(`New client ${socket.handshake.query.uuid} connected`);
   // login
   socket.emit('getUserList', userList);
 
-  socket.on('setName', (name) => {
-    userList.push(name);
+  socket.on('setName', (name, uuid) => {
+    userList.push({ name, uuid });
     io.emit('getUserList', userList);
   });
   // pixi
   socket.on('createPlayer', (uuid) => {
     playerList.push({ uuid, x: startX, y: startY });
   });
+  socket.on('updateServerPos', () => {
+    _.forEach(playerList, (player) => {
+      if (!player.theta) return;
+      if (player.x + setting.velocity * Math.cos(player.theta) - setting.circleRadius >= 0 &&
+        player.x + setting.velocity * Math.cos(player.theta) + setting.circleRadius <= setting.worldWidth) { player.x += setting.velocity * Math.cos(player.theta); }
+      if (player.y + setting.velocity * Math.sin(player.theta) - setting.circleRadius >= 0 &&
+        player.y + setting.velocity * Math.sin(player.theta) + setting.circleRadius <= setting.worldHeight) { player.y += setting.velocity * Math.sin(player.theta); }
+    });
+    socket.emit('updateClientPos', playerList);
+  });
+
   socket.on('mouseMove', (uuid, theta) => {
-    _.find(playerList, { uuid }).theta = theta;
+    const player = _.find(playerList, { uuid });
+    if (player) {
+      player.theta = theta;
+    }
   });
 
   socket.on('disconnect', () => {
-    console.log('Client disconnected');
+    console.log(`Client ${socket.handshake.query.uuid} disconnected`);
+    _.remove(userList, user => user.uuid === socket.handshake.query.uuid);
+    _.remove(playerList, player => player.uuid === socket.handshake.query.uuid);
+    io.emit('getUserList', userList);
+    io.emit('deletePlayer', socket.handshake.query.uuid);
   });
 });
 

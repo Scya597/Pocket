@@ -13,13 +13,14 @@ class App extends Component {
       login: 0,
     };
     const { endpoint } = this.state;
-    this.socket = socketIOClient(endpoint);
     this.uuid = uuid();
+    this.socket = socketIOClient(endpoint, { query: { uuid: this.uuid } });
+
   }
 
   handleLogin = () => {
     this.setState({ login: 1 });
-    this.socket.emit('createPlayer', { uuid: this.uuid });
+    this.socket.emit('createPlayer', this.uuid);
   }
 
   render() {
@@ -27,7 +28,7 @@ class App extends Component {
       <div>
         {this.state.login === 1
           ? <Pixi socket={this.socket} uuid={this.uuid}/>
-          : <LoginBox handlelogin={this.handleLogin} socket={this.socket} />}
+          : <LoginBox handlelogin={this.handleLogin} socket={this.socket} uuid={this.uuid}/>}
       </div>
     );
   }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import * as PIXI from 'pixi.js';
 import _ from 'lodash';
-import setting from './setting';
+import setting from '../setting';
 
 class Pixi extends Component {
   constructor(props) {
@@ -17,7 +17,9 @@ class Pixi extends Component {
       window.innerWidth, window.innerHeight,
       { antialias: true, backgroundColor: 0xe4e4e4, autoStart: true },
     );
+
     this.refs.pixi.appendChild(this.app.view);
+    
     // set camera
     this.camera = new PIXI.Container();
     this.camera.position.set(this.app.screen.width / 2, this.app.screen.height / 2);
@@ -30,35 +32,50 @@ class Pixi extends Component {
     this.camera.addChild(border);
     // animation loop
     this.app.ticker.add(() => {
-      this.socket.emit('draw', (playerList) => {
-        _.forEach(playerList, (val) => {
-          const sprite = _.find(this.camera.children, { uuid: val.uuid });
+      this.socket.emit('updateServerPos');
+      this.socket.on('updateClientPos', (playerList) => {
+        _.forEach(playerList, (player) => {
+          const sprite = _.find(this.camera.children, { uuid: player.uuid });
           if (!sprite) {
-            // already exist in camera
-            sprite.x = val.x;
-            sprite.y = val.y;
-            if (this.uuid === val.uuid) {
-              // my sprite
-              this.camera.pivot.copy(sprite.position);
-            }
-          } else {
             // not exist in camera
             // create circle
-            const circle = new PIXI.Sprite(this.createCircle(0x9ce5f4, val.x, val.y).generateCanvasTexture());
-            circle.uuid = val.uuid;
+            let circle;
+            if (this.uuid === player.uuid) // my sprite
+            { circle = new PIXI.Sprite(this.createCircle(0x3080e8, 0, 0, setting.circleRadius).generateCanvasTexture()); }
+            else
+            { circle = new PIXI.Sprite(this.createCircle(0x9ce5f4, 0, 0, setting.circleRadius).generateCanvasTexture()); }
+
+            circle.anchor.set(0.5, 0.5);
+            circle.uuid = player.uuid;
+            circle.x = player.x;
+            circle.y = player.y;
+
             this.camera.addChild(circle);
-            if (this.uuid === val.uuid) {
+            if (this.uuid === player.uuid) {
               // my sprite
               this.camera.on('mousemove', (e) => {
                 const { x, y } = e.data.getLocalPosition(this.camera);
                 const theta = Math.atan2(y - circle.y, x - circle.x);
-                this.socket.emit('mouseMove', { uuid: this.uuid, theta });
+                this.socket.emit('mouseMove', this.uuid, theta);
                 this.camera.pivot.copy(circle.position);
               });
+            }
+          } else {
+            // already exist in camera
+            sprite.x = player.x;
+            sprite.y = player.y;
+            if (this.uuid === player.uuid) {
+              // my sprite
+              this.camera.pivot.copy(sprite.position);
             }
           }
         });
       });
+    });
+    // delete player socket on
+    this.socket.on('deletePlayer', (uuid) => {
+      const sprite = _.find(this.camera.children, { uuid });
+      this.camera.removeChild(sprite);
     });
   }
   createBorder = (w, h) => {

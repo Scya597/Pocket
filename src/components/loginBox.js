@@ -7,6 +7,7 @@ class LoginBox extends Component {
       userList: [],
     };
     this.socket = props.socket;
+    this.uuid = props.uuid;
   }
 
   componentWillMount() {
@@ -16,7 +17,7 @@ class LoginBox extends Component {
   }
 
   setTitle = () => {
-    this.socket.emit('setName', { name: this.refs.text.value });
+    this.socket.emit('setName', this.refs.text.value, this.uuid);
     this.props.handlelogin(); // update app state
     this.refs.text.value = '';
   }
