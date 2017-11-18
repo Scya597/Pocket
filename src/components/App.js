@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import socketIOClient from 'socket.io-client';
+import uuid from 'uuid/v1';
 import LoginBox from './LoginBox';
+import Pixi from './Pixi';
+
 
 class App extends Component {
   constructor() {
@@ -10,19 +13,21 @@ class App extends Component {
       login: 0,
     };
     const { endpoint } = this.state;
-    this.state.socket = socketIOClient(endpoint);
+    this.socket = socketIOClient(endpoint);
+    this.uuid = uuid();
   }
 
   handleLogin = () => {
     this.setState({ login: 1 });
+    this.socket.emit('createPlayer', { uuid: this.uuid });
   }
 
   render() {
     return (
       <div>
         {this.state.login === 1
-          ? <div id="pixi" />
-          : <LoginBox handlelogin={this.handleLogin} socket={this.state.socket} />}
+          ? <Pixi socket={this.socket} uuid={this.uuid}/>
+          : <LoginBox handlelogin={this.handleLogin} socket={this.socket} />}
       </div>
     );
   }
