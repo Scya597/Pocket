@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import socketIOClient from 'socket.io-client';
 import uuid from 'uuid/v1';
-import LoginBox from './LoginBox';
+import LoginBox from './loginBox';
 import Pixi from './Pixi';
 
 
@@ -15,7 +15,6 @@ class App extends Component {
     const { endpoint } = this.state;
     this.uuid = uuid();
     this.socket = socketIOClient(endpoint, { query: { uuid: this.uuid } });
-
   }
 
   handleLogin = () => {
@@ -27,8 +26,8 @@ class App extends Component {
     return (
       <div>
         {this.state.login === 1
-          ? <Pixi socket={this.socket} uuid={this.uuid}/>
-          : <LoginBox handlelogin={this.handleLogin} socket={this.socket} uuid={this.uuid}/>}
+          ? <Pixi socket={this.socket} uuid={this.uuid} />
+          : <LoginBox handlelogin={this.handleLogin} socket={this.socket} uuid={this.uuid} />}
       </div>
     );
   }

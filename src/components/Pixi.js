@@ -19,7 +19,7 @@ class Pixi extends Component {
     );
 
     this.refs.pixi.appendChild(this.app.view);
-    
+
     // set camera
     this.camera = new PIXI.Container();
     this.camera.position.set(this.app.screen.width / 2, this.app.screen.height / 2);
@@ -28,7 +28,9 @@ class Pixi extends Component {
     // // set mousemove listener
     this.camera.interactive = true;
     // create border
-    const border = new PIXI.Sprite(this.createBorder(setting.worldWidth, setting.worldHeight).generateCanvasTexture());
+    const border = new PIXI.Sprite(this.createBorder(setting.worldWidth, setting.worldHeight)
+      .generateCanvasTexture());
+
     this.camera.addChild(border);
     // animation loop
     this.app.ticker.add(() => {
@@ -40,10 +42,13 @@ class Pixi extends Component {
             // not exist in camera
             // create circle
             let circle;
-            if (this.uuid === player.uuid) // my sprite
-            { circle = new PIXI.Sprite(this.createCircle(0x3080e8, 0, 0, setting.circleRadius).generateCanvasTexture()); }
-            else
-            { circle = new PIXI.Sprite(this.createCircle(0x9ce5f4, 0, 0, setting.circleRadius).generateCanvasTexture()); }
+            if (this.uuid === player.uuid) { // my sprite
+              circle = new PIXI.Sprite(this.createCircle(0x3080e8, 0, 0, setting.circleRadius)
+                .generateCanvasTexture());
+            } else {
+              circle = new PIXI.Sprite(this.createCircle(0x9ce5f4, 0, 0, setting.circleRadius)
+                .generateCanvasTexture());
+            }
 
             circle.anchor.set(0.5, 0.5);
             circle.uuid = player.uuid;
