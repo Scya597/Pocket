@@ -4,14 +4,14 @@
 	flex-direction: column;
 	align-items: center;
  }
- 
+
  .loginOnline{
 	@include xcenter-col-flex;
 	width: 100%;
 	height: 100%;
 	top: 55%;
 	transition: 0.6s ease-out;
- 
+
 	.loginOnlineDraw{
 	  width: 30%;
 	  height: 3rem;
@@ -41,7 +41,7 @@
 	  top: 0%;
 	}
  }
- 
+
  .loginStart{
 	position: relative;
 	top: 12rem;
@@ -109,8 +109,8 @@
 	align-items: center;
  }
  /// reset
- @import 'https://fonts.googleapis.com/css?family=Open+Sans';
- //reset dom like input 
+ @import 'Open-Sans-font.scss';
+ //reset dom like input
  *:focus {
 	outline: none;
  }
@@ -122,11 +122,11 @@
 	box-sizing: border-box;
 	font-family: 'Open Sans', sans-serif;
  }
- 
+
  html {
 	height: 100%;
  }
- 
+
  body {
 	display: flex;
 	flex-direction: column;
@@ -136,4 +136,3 @@
 	background-color: #9cf4df;
 	color: #b4b4b4;
  }
- 
