@@ -24,21 +24,18 @@ class LoginBox extends Component {
 
   render() {
     return (
-      <div id="startMenuWrapper">
-        <div id="startMenu">
-          <p>Your Online Game</p>
-          <input
-            type="text"
-            tabIndex="0"
-            placeholder="Enter your name here"
-            id="playerNameInput"
-            ref="text"
-          />
-          <b className="input-error">Nick name must be alphanumeric characters only!</b>
-          <br />
-          <button id="startButton" onClick={this.setTitle}>Play</button>
-          {this.state.userList.map(user =>
-          (<div className="userName"> {user.name} </div>))}
+      <div className="box">
+        <div className="loginMenu">
+          <h1 className="loginHeader">Welcome</h1>
+          <input className="loginInput" placeholder="name" />
+          <button className="loginStart" onClick={this.setTitle}>START</button>
+          <div className="loginOnline">
+            <div className="loginOnlineDraw">Online</div>
+            <ul className="loginOnlineul">
+              {this.state.userList.map(user =>
+          (<li className="loginOnlineli"> {user.name} </li>))}
+            </ul>
+          </div>
         </div>
       </div>
     );
@@ -46,3 +43,18 @@ class LoginBox extends Component {
 }
 
 export default LoginBox;
+
+// <div className="box">
+// <div className="loginMenu">
+//   <h1 className="loginHeader">Welcome</h1>
+//   <input className="loginInput" placeholder="name"/>
+//   <button className="loginStart" onClick={this.setTitle}>START</button>
+//   <div className="loginOnline">
+//     <div className="loginOnlineDraw">Online</div>
+//     <ul className="loginOnlineul">
+// {this.state.userList.map(user =>
+//   (<li className="loginOnlineli"> {user.name} </li>))}
+//     </ul>
+//   </div>
+// </div>
+// </div>
