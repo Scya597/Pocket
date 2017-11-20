@@ -18,6 +18,7 @@ class App extends Component {
   }
 
   handleLogin = () => {
+    console.log('handle');
     this.setState({ login: 1 });
     this.socket.emit('createPlayer', this.uuid);
   }

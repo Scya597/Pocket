@@ -1,5 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
+const autoprefixer = require('autoprefixer');
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = {
@@ -27,7 +29,7 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        loader: 'style-loader!css-loader!sass-loader',
+        loader: 'style-loader!css-loader!postcss-loader!sass-loader',
       },
     ],
   },
@@ -36,6 +38,17 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './src/template.html',
       filename: 'index.html',
+    }),
+    new webpack.LoaderOptionsPlugin({
+      minimize: false,
+      debug: true,
+      options: {
+        postcss: [
+          autoprefixer({
+            browsers: ['last 2 version', 'Explorer >= 10', 'Android >= 4'],
+          }),
+        ],
+      },
     }),
   ],
 };

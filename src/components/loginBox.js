@@ -17,6 +17,7 @@ class LoginBox extends Component {
   }
 
   setTitle = () => {
+    console.log('set');
     this.socket.emit('setName', this.refs.text.value, this.uuid);
     this.props.handlelogin(); // update app state
     this.refs.text.value = '';
@@ -27,7 +28,7 @@ class LoginBox extends Component {
       <div className="box">
         <div className="loginMenu">
           <h1 className="loginHeader">Welcome</h1>
-          <input className="loginInput" placeholder="name" />
+          <input className="loginInput" placeholder="name" ref="text" />
           <button className="loginStart" onClick={this.setTitle}>START</button>
           <div className="loginOnline">
             <div className="loginOnlineDraw">Online</div>
