@@ -1,6 +1,6 @@
-$(document).on('click', (e) => {
+document.addEventListener('click', (e) => {
   const c = e.target.className;
   if (c === 'loginOnlineDraw') {
-    $('.loginOnline').toggleClass('open');
+    document.querySelector('.loginOnline').classList.toggle('open');
   }
 });
