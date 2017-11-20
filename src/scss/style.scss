@@ -101,6 +101,18 @@
 	background-color: #fff;
 	overflow: hidden;
  }
+
+.loginRoot{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 100vw;
+	height: 100vh;
+	background-color: #9cf4df;
+	color: #b4b4b4;
+}
+
  /// reset
  @import 'Open-Sans-font.scss';
  //reset dom like input
@@ -120,14 +132,10 @@
 	height: 100%;
  }
 
- body {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	min-height: 100vh;
-	margin: 0;
-	line-height: 1.4;
-	background-color: #9cf4df;
-	color: #b4b4b4;
+ #root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
+  line-height: 1.4;
  }
