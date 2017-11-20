@@ -25,18 +25,16 @@ class LoginBox extends Component {
 
   render() {
     return (
-      <div className="box">
-        <div className="loginMenu">
-          <h1 className="loginHeader">Welcome</h1>
-          <input className="loginInput" placeholder="name" ref="text" />
-          <button className="loginStart" onClick={this.setTitle}>START</button>
-          <div className="loginOnline">
-            <div className="loginOnlineDraw">Online</div>
-            <ul className="loginOnlineul">
-              {this.state.userList.map(user =>
+      <div className="loginMenu">
+        <h1 className="loginHeader">Welcome</h1>
+        <input className="loginInput" placeholder="name" ref="text" />
+        <button className="loginStart" onClick={this.setTitle}>START</button>
+        <div className="loginOnline">
+          <div className="loginOnlineDraw">Online</div>
+          <ul className="loginOnlineul">
+            {this.state.userList.map(user =>
           (<li className="loginOnlineli"> {user.name} </li>))}
-            </ul>
-          </div>
+          </ul>
         </div>
       </div>
     );
