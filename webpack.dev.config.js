@@ -1,21 +1,25 @@
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const DashboardPlugin = require('webpack-dashboard/plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const autoprefixer = require('autoprefixer');
-// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+
+const hotMiddlewareScript = 'webpack-hot-middleware/client';
 
 module.exports = {
   entry: {
     bundle: [
+      hotMiddlewareScript,
       './src/index.js',
     ],
   },
   output: {
     filename: 'bundle.js',
     path: path.join(__dirname, 'public'),
-    publicPath: '',
+    publicPath: '/',
   },
-  devtool: 'source-map',
+  devtool: 'eval',
   module: {
     loaders: [
       {
@@ -24,7 +28,7 @@ module.exports = {
       },
       {
         test: /\.js$/,
-        loaders: 'babel-loader',
+        loaders: ['babel-loader'],
         exclude: /node_modules/,
       },
       {
@@ -35,10 +39,13 @@ module.exports = {
   },
   plugins: [
     // new BundleAnalyzerPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoEmitOnErrorsPlugin(),
     new HtmlWebpackPlugin({
       template: './src/template.html',
       filename: 'index.html',
     }),
+    new DashboardPlugin(),
     new webpack.LoaderOptionsPlugin({
       minimize: false,
       debug: true,
