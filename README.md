@@ -1,41 +1,27 @@
-# MERN Boilerplate &middot; [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
-> 🎉 ✨ The Boilerplate I create to build app with ReactJS + NodeJS + Express + webpack
+# Pocket &middot; [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
+> 🎉 ✨ An IO-Game development template
 
 ## 0. Table of Contents  
-- [Setup Boilerplate](#1-setup-boilerplate)
-- [Development](#2-development)
-- [Production](#3-production)
-- [Supported Config](#4-supported-config)
+- [Setup](#1-setup)
+- [Development and Production](#2-development-and-production)
 
-## 1. Setup Boilerplate
+## 1. Setup
 ```
-git clone https://github.com/Scya597/React-Express-Boilerplate.git
+git clone https://github.com/Scya597/Pocket.git
 npm install
 ```
 
-## 2. Development
+## 2. Development and Production
+
+### 2.1 To develop the project
 
 ```
 npm run dev
 ```
 
-## 3. Production
+### 2.2 Build production bundle and run the server
 
 ```
 npm run build
 npm start
 ```
-
-## 4. Supported Config
-
-- [json-loader](https://github.com/webpack-contrib/json-loader)
-- [sass-loader](https://github.com/webpack-contrib/sass-loader)
-- [css-loader](https://github.com/webpack-contrib/css-loader)
-- [style-loader](https://github.com/webpack-contrib/style-loader)
-- [html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin)
-- [webpack-bundle-analyzer](https://github.com/robertknight/webpack-bundle-size-analyzer)
-- [webpack-dashboard](https://github.com/FormidableLabs/webpack-dashboard)
-- [webpack-dev-middleware](https://github.com/webpack/webpack-dev-middleware)
-- [webpack-hot-middleware](https://github.com/glenjamin/webpack-hot-middleware)
-- [babel-preset-env](https://github.com/babel/babel-preset-env)
-- [eslint-config-airbnb](https://github.com/airbnb/javascript/tree/master/packages/eslint-config-airbnb)
